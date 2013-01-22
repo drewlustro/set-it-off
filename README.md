@@ -1,0 +1,4 @@
+base
+====
+
+Flask Skeleton Project
