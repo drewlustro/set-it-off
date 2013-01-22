@@ -1,0 +1,36 @@
+{%- extends "layouts/default.html" -%}
+{%- block content -%}
+<h2>Log in</h2>
+<form method="POST" action="" class="form-vertical focus-form">
+    {{ form.hidden_tag() }}
+    <fieldset>
+        <div class="focus-content-padded text-center margin-top-10">
+            {% for field in form if not (field.type == 'HiddenField' or field.type == 'CSRFTokenField')%}
+                <div class="control-group {{ 'error' if field.errors else '' }}">
+                    <div class="controls">
+                        {{ field(placeholder=field.name.capitalize(), class='input-large', id=field.name) }}
+                        {% if field.errors %}
+                        <span class="help-inline">
+                            {% for error in field.errors %}
+                            {{ error }}
+                            {% endfor %}
+                            <span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            {%- if next -%}
+                <input type='hidden' name='next' value='{{ next }}' />
+            {%- endif -%}
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Log in</i></button>
+        </div>
+    </fieldset>
+</form>
+<script type='text/javascript'>
+    $(document).on('ready', function() {
+        $('#email').focus();
+    });
+</script>
+{%- endblock -%}
