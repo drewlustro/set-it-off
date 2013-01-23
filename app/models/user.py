@@ -71,17 +71,3 @@ class User(Base):
         password = bcrypt.generate_password_hash(value)
         self.password = password
 
-    # ------------------------------------------------------------------------
-    # INSTANCE METHODS
-    # ------------------------------------------------------------------------
-
-    @property
-    def questions(self):
-        return Question.query.filter_by(user_id=self.id).all()
-
-    @property
-    def entries(self):
-        return Entry.query.filter_by(user_id=self.id).all()
-
-    def entry_for_date(self, date):
-        return Entry.query.filter_by(user_id=self.id, date=date).first()
