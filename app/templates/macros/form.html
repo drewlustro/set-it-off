@@ -1,4 +1,4 @@
-{%- macro quick_form(form, action='', method='POST') -%}
+{%- macro quick_form(form, action='', method='POST', submit='Submit') -%}
     <form method="{{ method }}" action="{{ action }}" class="form-vertical">
     {{ form.hidden_tag() }}
     <fieldset>
@@ -22,7 +22,7 @@
             {%- endif -%}
         </div>
         <div>
-            <button type="submit" class="btn btn-primary">Add</i></button>
+            <button type="submit" class="btn btn-primary">{{ submit }}</button>
         </div>
     </fieldset>
 </form>
