@@ -2,9 +2,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
+from app import config
+
 _DATABASE_URL = 'mysql://root@localhost/'\
                 'dailylog?unix_socket=/var/run/mysqld/mysqld.sock'
-engine = create_engine(_DATABASE_URL,
+engine = create_engine(config.DATABASE_URI,
                        convert_unicode=True,
                        echo=False,
                        pool_recycle=3600,
