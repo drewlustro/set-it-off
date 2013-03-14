@@ -6,6 +6,7 @@ from app.lib import error, util
 
 application = Flask(__name__)
 application.secret_key = '4m1t4m1t4m1t4m1t4m1t4m1t4m1t4m1t4m1t4m1t'
+application.config.from_object(config_module)
 
 # ----------------------------------------------------------------------------
 # Error Logging
@@ -14,6 +15,12 @@ if os.environ.get('FLASK_ENV', None) == 'production':
     application.logger.addHandler(error.get_mail_handler())
     application.logger.addHandler(error.get_hipchat_handler())
 
+
+# ----------------------------------------------------------------------------
+# Jinja Filters
+# ----------------------------------------------------------------------------
+from app.lib import custom_jinja_filters
+custom_jinja_filters.register_filters(application)
 
 # ----------------------------------------------------------------------------
 # Controller Registration

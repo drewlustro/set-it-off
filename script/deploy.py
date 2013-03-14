@@ -11,7 +11,7 @@ fabric.state.env.user = 'www'
 fabric.state.env.key_filename = '~/.ssh/id_rsa'
 fabric.state.env.shell = '/bin/bash -l -c'
 
-PROJECT_NAME = 'dailylog'
+PROJECT_NAME = 'base'
 PROJECT_PATH = '/fcc/%s' % PROJECT_NAME
 PYTHON_PATH = '/fcc/envs/%s/bin' % PROJECT_NAME
 
@@ -42,19 +42,29 @@ def restart_web():
 
 
 def restart_worker():
-    with settings(warn_only=True):
-        run('sudo pkill -SIGQUIT pyres_minion')
     for job in JOBS:
         run('sudo supervisorctl restart ' + job)
 
 
+def start_scheduler():
+    print "Starting scheduler"
+    run('sudo supervisorctl start %s_scheduler' % PROJECT_NAME)
+
+
+def stop_scheduler():
+    print "Starting scheduler"
+    run('sudo supervisorctl stop %s_scheduler' % PROJECT_NAME)
+
+
 @task
 def deploy():
+    #stop_scheduler()
     update_code()
     update_packages()
     migrate()
     #restart_worker()
     restart_web()
+    #start_scheduler()
 
 
 if __name__ == '__main__':

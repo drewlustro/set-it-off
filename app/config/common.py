@@ -10,3 +10,26 @@ HIPCHAT_SENDER = 'Exception'
 
 ERROR_MAIL_SENDER_EMAIL = 'server-error@stathub.mailgun.org'
 ERROR_MAIL_RECIPIENT_EMAIL = 'ops@flatironcollective.com'
+
+CACHE_ENABLED = False
+CACHE_URL = '127.0.0.1:11211'
+CACHE_LOCK_DIR = '/tmp/cache/lock'
+
+MAIL_URL_ROOT = 'localhost'
+
+DATABASE = 'lazyfollow'
+DATABASE_URI = 'mysql://root@localhost/'\
+               '%s?unix_socket=/var/run/mysqld/mysqld.sock' % DATABASE
+
+##
+# Social Network
+
+FACEBOOK_CLIENT_ID = ''
+FACEBOOK_CLIENT_SECRET = ''
+
+
+TWITTER_CONSUMER_KEY = ''
+TWITTER_CONSUMER_SECRET = ''
+
+INSTAGRAM_CLIENT_ID = ''
+INSTAGRAM_CLIENT_SECRET = ''
