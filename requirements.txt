@@ -4,6 +4,7 @@ Fabric==1.5.2
 Flask==0.9
 Flask-Bcrypt==0.5.2
 -e git://github.com/flatironcollective/flask-mail.git@4a309e4ceef9476a5abd406b80e660af73d5c729#egg=Flask_Mail-dev
+Flask-OAuth==0.12
 Flask-WTF==0.8.2
 Jinja2==2.6
 Mako==0.7.3
