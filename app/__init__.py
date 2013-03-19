@@ -3,6 +3,7 @@ from flask import Flask, g, session
 from app.lib.database import db
 from app.models import User
 from app.lib import error, util
+from app import config as config_module
 
 application = Flask(__name__)
 application.secret_key = '4m1t4m1t4m1t4m1t4m1t4m1t4m1t4m1t4m1t4m1t'

@@ -2,7 +2,6 @@ import datetime
 from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from flaskext.bcrypt import Bcrypt
 from app.lib.database import Base, db
-from app.models import Question, Entry
 
 
 class User(Base):
