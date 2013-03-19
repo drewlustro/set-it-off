@@ -32,7 +32,7 @@ def update_packages():
 def migrate():
     ["/fcc/envs/stathub/bin/alembic", "upgrade", "head"],
     run("export PYTHONPATH=%s;"\
-        "cd %s/migrations && %s/alembic upgrade head" % (
+        "cd %s && %s/alembic upgrade head" % (
             PROJECT_PATH, PROJECT_PATH, PYTHON_PATH))
 
 
