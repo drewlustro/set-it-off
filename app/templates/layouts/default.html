@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
     <head>
         <title>{%- block title -%}{%- endblock -%}</title>
         <!-- Bootstrap -->
@@ -9,12 +9,23 @@
         <script src="/static/js/bootstrap.min.js"></script>
         {%- block head -%}
         {%- endblock -%}
+
+        <!-- Standard meta -->
+        <meta charset="utf-8"/> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="{%- block meta_description -%}Page meta description.{%- endblock -%}">
+
+        <!-- OpenGraph meta -->
+        <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}"/>
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="{% block og_description %}Page OpenGraph description.{% endblock %}">    
+        <meta property="og:image" content="{% block og_image %}{% endblock %}" />
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="/">DailyLog</a>
+                    <a class="brand" href="/">Base Application</a>
                     <div class="nav-collapse collapse">
                         <ul class='nav'>
                             {%- if g.user -%}
@@ -55,7 +66,7 @@
 
         <footer>
             <div class='container'>
-                &copy; 2013 Flatiron Collective Corp.
+                &copy; 2013 Drew Lustro
             </div>
         </footer>
     </body>
