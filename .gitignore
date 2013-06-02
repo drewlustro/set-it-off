@@ -1,4 +1,15 @@
+# MAC OS X
 .DS_Store
+
+# BOWER
+components
+
+# GRUNT src/build output directory
+src
+build
+
+# NPM Modules
+node_modules
 
 *.py[cod]
 
