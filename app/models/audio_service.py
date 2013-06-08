@@ -55,8 +55,7 @@ class AudioService(Service):
         commands = self.copy_config_file_commands()
         print "Copying config files..."
         print self.run_commands(commands)
-        commands = ['killall pulseaudio',
-                    '/etc/init.d/alsa-utils restart']
+        commands = ['/etc/init.d/alsa-utils restart']
         print "Running restart command"
         print self.run_commands(commands)
 
