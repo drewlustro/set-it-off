@@ -13,10 +13,10 @@
 
     <form method="POST" action="{{ url_for('default.dashboard') }}">
         <fieldset>
-            <legend>Shairport Configuration</legend>
+            <legend>Shairport (AirPlay)</legend>
             <input type="hidden" name="namespace" value="shairport" />
 
-            <label for="speaker_name">Speaker Name</label>
+            <label for="speaker_name"><i class="icon-music"></i> Speaker Name</label>
             <input type="text"
                     name="speaker_name"
                     placeholder="Enter a name..."
@@ -24,6 +24,25 @@
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Save</button>
                 <button type="submit" name="restart" value="1" class="btn">Restart Shairport</button>
+            </div>
+        </fieldset>
+    </form>
+
+    <form method="POST" action="{{ url_for('default.dashboard') }}">
+        <fieldset>
+            <legend>Audio</legend>
+            <input type="hidden" name="namespace" value="audio" />
+
+            <label for="device"><i class="icon-volume-up"></i> Preferred Audio Device</label>
+            <select name="device" class="span4">
+                <option value="usbaudio"{{ settings['audio:device'] | selected_on('usbaudio') }}>Hi-Fi USB Audio</option>
+                <option value="pulse"{{ settings['audio:device'] | selected_on('pulse') }}>3.5mm Audio Jack (RasPi PWM)</option>
+                <option value="original"{{ settings['audio:device'] | selected_on('original') }}>RasPi Factory Default</option>
+            </select>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save Config</button>
+                <button type="submit" name="restart" value="1" class="btn">Restart Audio Subsystem</button>
             </div>
         </fieldset>
     </form>

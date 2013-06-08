@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, g, session, flash,\
     redirect, url_for, request
-from app.models import User, ShairportService
+from app.models import User, ShairportService, AudioService, DeploySetting
 from app.forms import LoginForm, SignupForm
 from app.lib import filters
 from app import application
@@ -16,6 +16,8 @@ def index():
 
 @controller.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
+
+    
     if request.method == 'POST':
         application.jinja_env.cache.clear()
         namespace = request.form.get('namespace', None)
@@ -24,18 +26,42 @@ def dashboard():
             print "shairport:edit"
             ss = ShairportService()
 
+            if ss.update_from_form(request.form):
+                flash("ShairportService updated & saved.")
+
             if request.form.get('restart', False):
+                flash("ShairportService restarted.")
                 print "restarting"
                 ss.restart()
 
-            if ss.update_from_form(request.form):
-                flash("ShairportService updated & saved.")
-                return redirect(url_for('.dashboard'))
+            
+            return redirect(url_for('.dashboard'))
+
+        elif namespace == 'audio':
+            print 'audio:edit'
+            ss = ShairportService()
+            aservice = AudioService()
+
+            if aservice.update_from_form(request.form):
+                flash("AudioDevice updated & saved.")
+
+            if request.form.get('restart', False):
+                flash("Audio Subsystem restarted.")
+                print "restarting audio"
+                aservice.restart()
+                ss.restart()
+
+            return redirect(url_for('.dashboard'))
+
+        else:
 
             flash("Error saving shairport data.")
             return redirect(url_for('.dashboard'))
 
-    return render_template('default/dashboard.html')
+    settings = {}
+    settings['audio:device'] = DeploySetting.find_or_create_by_namespace_key('audio', 'device', 'usbaudio').value
+
+    return render_template('default/dashboard.html', settings=settings)
 
 
 @controller.route("/login", methods=['GET', 'POST'])

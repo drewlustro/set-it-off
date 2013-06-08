@@ -70,5 +70,12 @@ class Service:
     def restart_command(self):
         return 'echo "This is a Service RESTART command"'
 
+    def run_commands(self, commands):
+        ret = []
+        for cmd in commands:
+            print "[%s RUN]: '%s'" % (self.__class__.__name__, cmd)
+            ret.append(subprocess.call(cmd, shell=True))
+        return ret
+
     def __repr__(self):
         return '<%s> data: %r' % (self.__class__.__name__, self.data, )
