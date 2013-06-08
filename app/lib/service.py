@@ -56,8 +56,10 @@ class Service:
         return subprocess.call(cmd, shell=True)
 
     def restart(self):
-        self.stop()
-        return self.start()
+        cmd = self.restart_command()
+        print "Running restart command"
+        print cmd
+        return subprocess.call(cmd, shell=True)
 
     def start_command(self):
         return 'echo "This is a Service START command"'
