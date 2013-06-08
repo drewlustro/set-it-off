@@ -5,15 +5,15 @@
 {%- endblock -%}
 
 {%- block content -%}
-    <h1>Device Services Dashboard</h1>
+    <h2>Device Services Dashboard</h2>
     <p>
-        Welcome to the admin interface for your sexy new faux AirPlay RasPi appliance!
+        Welcome to the admin interface for your sexy new RasPi appliance!
     </p>
     <hr>
-
-    <ul class="thumbnails">
+    {% include('shared/_flash_messages.html') %}
+    <ul class="thumbnails services">
         <li class="span4">
-            <h3>Shairport (AirPlay)</h3>
+            <h4>Shairport AirPlay Audio</h4>
             <hr>
             <form method="POST" action="{{ url_for('default.dashboard') }}">
                 <fieldset>
@@ -21,13 +21,14 @@
                     <input type="hidden" name="namespace" value="shairport" />
 
                     <div class="device-options">
-                        <label for="speaker_name"><i class="icon-music"></i> Speaker Name</label>
+                        <label for="speaker_name"><h5><i class="icon-music"></i> Speaker Name</h5></label>
                         <input type="text"
                                 name="speaker_name"
                                 placeholder="Enter a name..."
                                 class="js-has-default"
                                 data-default="AirPlaySpeaker"
                                 value="{{ 'speaker_name' | deploy_setting('shairport') }}" />
+                        <span class="help-block">Advertises this name over wi-fi.</span>
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Save</button>
@@ -37,7 +38,7 @@
             </form>
         </li>
         <li class="span4">
-            <h3>Audio Hardware</h3>
+            <h4>Audio Output Hardware</h4>
             <hr>
             <form method="POST" action="{{ url_for('default.dashboard') }}">
                 <fieldset>
@@ -45,10 +46,11 @@
                     <div class="device-options">
                         <input type="hidden" name="namespace" value="audio" />
 
-                        <label for="device"><i class="icon-volume-up"></i> Preferred Audio Device</label>
+                        <label for="device"><h5><i class="icon-volume-up"></i> Preferred Audio Device</h5></label>
                         <select name="device"
                                 class="span4"
                                 class="js-has-default"
+                                multiple="multiple"
                                 data-default="usbaudio">
                             <option value="usbaudio"{{ settings['audio:device'] | selected_on('usbaudio') }}>Hi-Fi USB Audio</option>
                             <option value="pulse"{{ settings['audio:device'] | selected_on('pulse') }}>3.5mm Audio Jack (RasPi PWM)</option>
@@ -56,21 +58,21 @@
                         </select>
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">Save*</button>
                     </div>
                 </fieldset>
             </form>
         </li>
 
         <li class="span4">
-            <h3>Bluetooth</h3>
+            <h4>Bluetooth</h4>
             <hr>
             <form method="POST" action="{{ url_for('default.dashboard') }}">
                 <fieldset>
                     <div class="device-options">
                         <input type="hidden" name="namespace" value="bluetooth" />
 
-                        <label><i class="icon-signal"></i> Antenna</label>
+                        <label><h5><i class="icon-signal"></i> Antenna</h5></label>
                         <label class="checkbox" for="enabled">
                             <input type="checkbox" name="enabled" value="1" checked="checked" /> <i class="icon-bluetooth"></i> Enabled
                         </label>

@@ -1,20 +1,45 @@
 body {
-    padding-top: 60px;
+    padding-top: 120px;
+    background: #212121;
+    height: 100%;
 }
 
 #main {
     min-height: 400px;
+    padding: 30px;
+    background: #fff;
 }
 
 footer > .container {
-    margin-top: 10px;
-    border-top: 1px solid #ccc;
-    padding-top: 10px;
+    text-align: right;
+    margin-top: 30px;
     color: #666;
 }
 
 .device-options {
-    min-height: 80px;
+    min-height: 140px;
+}
+
+footer {
+    
+}
+
+.navbar-damon > .navbar-inner {
+    background: #000;
+}
+
+.services li {
+    
+}
+
+.damon-bar-nav li {
+    line-height: 80px;
+    border-right: 1px solid #333;
+    padding:    0px 20px;
+}
+
+.damon-bar-nav li:last-child {
+    border-right: none;
 }
 
 /**********************************

@@ -109,5 +109,6 @@ def signup():
 @controller.route("/logout")
 def logout():
     session.pop("user_id", None)
+    session.pop("reboot_required", None)
     g.user = None
     return redirect(url_for(".index"))

@@ -22,17 +22,17 @@
         <meta property="og:image" content="{% block og_image %}{% endblock %}" />
     </head>
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar navbar-inverse navbar-fixed-top navbar-damon">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="/">Set It Off (RasPi)</a>
+                    <a class="brand" href="/"><img src="/static/img/damon-white.png" /></a>
                     <div class="nav-collapse collapse">
                         <ul class='nav'>
                             {%- if g.user -%}
                                 {%- block nav -%}{%- endblock -%}
                             {%- endif -%}
                         </ul>
-                        <ul class='nav pull-right'>
+                        <ul class='nav pull-right damon-bar-nav'>
                             {%- if g.user -%}
                                 <li><a href="{{ url_for('default.dashboard') }}">Dashboard</a></li>
                                 <li><a href="{{ url_for('default.logout') }}">Log out</a></li>
@@ -47,43 +47,8 @@
         </div>
 
         <div class="container" id='main'>
-            {% if not hide_banners %}
-                {% if session['reboot_required'] and session['reboot_required']|length > 0 %}
-                <div class="alert alert-info margin-bottom-40">
-                    <div class="margin-bottom-10">
-                        <h4>Reboot required</h4>
-                        <div class="clearfix"></div>
-                    </div>
-
-                    Recent changes to the following services require reboot to take effect:
-                    <div class="padding-20 clearfix">
-                        {% for service in session['reboot_required'] %}
-                            {% if service == 'audio' %}
-                                <span class="label label-inverse">Linux Audio Subsystem</span>
-                            {% elif service == 'shairport' %}
-                                <span class="label label-inverse">Shairport AirPlay Service</span>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                    <a class="btn btn-block" href="{{ url_for('default.reboot') }}">Reboot Device</a>
-                    
-                </div>
-                <hr class="margin-bottom-20">
-                {% endif %}
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        <div id="flash-messages">
-                            <div class="alert">
-                                <button class="close">&times;</button>
-                                {% for message in messages %}
-                                    <div class="clearfix">{{ message|safe }}</div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endwith %}
-            {% endif %}
             
+
             {%- block content -%}
             {%- endblock -%}
         </div> <!-- /container -->
