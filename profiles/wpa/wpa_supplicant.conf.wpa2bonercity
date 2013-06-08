@@ -1,0 +1,9 @@
+network={
+ssid="Boner City Nissan X"
+proto=RSN
+key_mgmt=WPA-PSK
+pairwise=CCMP TKIP
+group=CCMP TKIP
+psk="b0nercity"
+}
+
