@@ -1,5 +1,5 @@
 import functools
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -32,6 +32,42 @@ class BaseExt(object):
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
+
+    def create(self):
+        db.add(self)
+        db.commit()
+        return True
+
+    def save(self):
+        db.add(self)
+        db.commit()
+        return True
+
+    def delete(self):
+        db.delete(self)
+        db.commit()
+
+    @classmethod
+    def count(cls):
+        return cls.query.count()
+
+    @classmethod
+    def all(cls):
+        return cls.query.all()
+
+    @classmethod
+    def last(cls):
+        return cls.query.order_by(desc('id')).first()
+
+    @classmethod
+    def find_by_eid(cls, id):
+        from app.lib import util
+        return cls.find_by_id(util.decode(id))
+
+    @property
+    def eid(self):
+        from app.lib import util
+        return util.encode(self.id)
 
 
 Base = declarative_base(cls=BaseExt)

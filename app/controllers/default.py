@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, g, session, flash,\
     redirect, url_for, request
-from app.models import User
+from app.models import User, ShairportService
 from app.forms import LoginForm, SignupForm
 from app.lib import filters
-
+from app import application
+from path import path
 
 controller = Blueprint("default", __name__, url_prefix="")
 
@@ -11,6 +12,25 @@ controller = Blueprint("default", __name__, url_prefix="")
 @controller.route("/")
 def index():
     return render_template('default/index.html')
+
+
+@controller.route('/dashboard', methods=['GET', 'POST'])
+def dashboard():
+    if request.method == 'POST':
+        application.jinja_env.cache.clear()
+        namespace = request.form.get('namespace', None)
+        
+        if namespace == 'shairport':
+            print "shairport:edit"
+            ss = ShairportService()
+            if ss.update_from_form(request.form):
+                flash("ShairportService updated & saved.")
+                return redirect(url_for('.dashboard'))
+
+            flash("Error saving shairport data.")
+            return redirect(url_for('.dashboard'))
+
+    return render_template('default/dashboard.html')
 
 
 @controller.route("/login", methods=['GET', 'POST'])
