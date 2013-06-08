@@ -23,6 +23,11 @@ def dashboard():
         if namespace == 'shairport':
             print "shairport:edit"
             ss = ShairportService()
+
+            if request.form.get('restart', False):
+                print "restarting"
+                ss.restart()
+
             if ss.update_from_form(request.form):
                 flash("ShairportService updated & saved.")
                 return redirect(url_for('.dashboard'))

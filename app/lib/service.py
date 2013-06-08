@@ -1,4 +1,5 @@
 from path import path
+import subprocess
 
 class Service:
 
@@ -39,9 +40,33 @@ class Service:
             self.init_default_file()
             self.load_from_file()
 
-
     def read(self):
         return self.filepath.text()
+
+    def start(self):
+        cmd = self.start_command()
+        print "Running start command"
+        print cmd
+        return subprocess.call(cmd, shell=True)
+
+    def stop(self):
+        cmd = self.stop_command()
+        print "Running stop command"
+        print cmd
+        return subprocess.call(cmd, shell=True)
+
+    def restart(self):
+        self.stop()
+        return self.start()
+
+    def start_command(self):
+        return 'echo "This is a Service START command"'
+
+    def stop_command(self):
+        return 'echo "This is a Service STOP command"'
+
+    def restart_command(self):
+        return 'echo "This is a Service RESTART command"'
 
     def __repr__(self):
         return '<%s> data: %r' % (self.__class__.__name__, self.data, )

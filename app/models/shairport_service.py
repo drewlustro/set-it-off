@@ -5,7 +5,7 @@ class ShairportService(Service):
 
     config_file = 'shairport.config'
     namespace = 'shairport'
-    default_contents = 'AirPlay Speaker'
+    default_contents = 'AirPlaySpeaker'
 
     def update_from_form(self, form):
         from app.models import DeploySetting
@@ -21,3 +21,15 @@ class ShairportService(Service):
 
         return True
 
+    @property
+    def speaker_name(self):
+        return util.filter_empty(self.get(), self.default_contents)
+
+    def start_command(self):
+        return '/etc/init.d/shairport start %s' % (self.speaker_name)
+
+    def stop_command(self):
+        return '/etc/init.d/shairport stop'
+
+    def restart_command(self):
+        return '/etc/init.d/shairport restart %s' % (self.speaker_name)
