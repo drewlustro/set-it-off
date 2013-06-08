@@ -4,13 +4,20 @@ from app.lib import util
 class AudioService(Service):
 
     config_file = 'audio.config'
-    namespace = 'audio'
     default_contents = 'usbaudio'
     profiles = ['usbaudio', 'pulse', 'original']
 
+    @classmethod
+    def namespace(cls):
+        return 'audio'
+
+    @property
+    def display_name(self):
+        raise 'Linux Audio Subsystem'
+
     def update_from_form(self, form):
         from app.models import DeploySetting
-        ds = DeploySetting.find_or_create_by_namespace_key(self.namespace, 'device')
+        ds = DeploySetting.find_or_create_by_namespace_key(AudioService.namespace(), 'device')
         device = util.filter_empty(form.get('device'), self.default_contents)
         if (device != self.get()):
             print "Saved new audio device. <old: %s, new: %s>" % (self.get(), device)
@@ -18,8 +25,9 @@ class AudioService(Service):
             ds.save()
             self.set(value=ds.value)
             self.save()
-
-        return True
+            return True
+        return False
+    
 
     @property
     def device_display_name(self):

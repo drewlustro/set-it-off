@@ -13,6 +13,14 @@ class Service:
         self.data = {}
         self.load_from_file()
 
+    @classmethod
+    def display_name(cls):
+        raise NotImplementedError('Undefined @property Service.display_name')
+
+    @classmethod
+    def namespace(cls):
+        raise NotImplementedError('Undefined @classmethod Service.namespace()')
+
     def init_default_file(self):
         self.filepath.write_text(self.default_contents)
 

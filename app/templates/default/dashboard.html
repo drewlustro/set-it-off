@@ -5,46 +5,98 @@
 {%- endblock -%}
 
 {%- block content -%}
-    <h1>Raspberry Pi Dashboard</h1>
+    <h1>Device Services Dashboard</h1>
     <p>
         Welcome to the admin interface for your sexy new faux AirPlay RasPi appliance!
     </p>
     <hr>
 
-    <form method="POST" action="{{ url_for('default.dashboard') }}">
-        <fieldset>
-            <legend>Shairport (AirPlay)</legend>
-            <input type="hidden" name="namespace" value="shairport" />
+    <ul class="thumbnails">
+        <li class="span4">
+            <h3>Shairport (AirPlay)</h3>
+            <hr>
+            <form method="POST" action="{{ url_for('default.dashboard') }}">
+                <fieldset>
+                    
+                    <input type="hidden" name="namespace" value="shairport" />
 
-            <label for="speaker_name"><i class="icon-music"></i> Speaker Name</label>
-            <input type="text"
-                    name="speaker_name"
-                    placeholder="Enter a name..."
-                    value="{{ 'speaker_name' | deploy_setting('shairport') }}" />
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <button type="submit" name="restart" value="1" class="btn">Restart Shairport</button>
-            </div>
-        </fieldset>
-    </form>
+                    <div class="device-options">
+                        <label for="speaker_name"><i class="icon-music"></i> Speaker Name</label>
+                        <input type="text"
+                                name="speaker_name"
+                                placeholder="Enter a name..."
+                                class="js-has-default"
+                                data-default="AirPlaySpeaker"
+                                value="{{ 'speaker_name' | deploy_setting('shairport') }}" />
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button class="js-set-default btn">Restore Default</button>
+                    </div>
+                </fieldset>
+            </form>
+        </li>
+        <li class="span4">
+            <h3>Audio Hardware</h3>
+            <hr>
+            <form method="POST" action="{{ url_for('default.dashboard') }}">
+                <fieldset>
+                    
+                    <div class="device-options">
+                        <input type="hidden" name="namespace" value="audio" />
 
-    <form method="POST" action="{{ url_for('default.dashboard') }}">
-        <fieldset>
-            <legend>Audio</legend>
-            <input type="hidden" name="namespace" value="audio" />
+                        <label for="device"><i class="icon-volume-up"></i> Preferred Audio Device</label>
+                        <select name="device"
+                                class="span4"
+                                class="js-has-default"
+                                data-default="usbaudio">
+                            <option value="usbaudio"{{ settings['audio:device'] | selected_on('usbaudio') }}>Hi-Fi USB Audio</option>
+                            <option value="pulse"{{ settings['audio:device'] | selected_on('pulse') }}>3.5mm Audio Jack (RasPi PWM)</option>
+                            <option value="original"{{ settings['audio:device'] | selected_on('original') }}>RasPi Factory Default</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </fieldset>
+            </form>
+        </li>
 
-            <label for="device"><i class="icon-volume-up"></i> Preferred Audio Device</label>
-            <select name="device" class="span4">
-                <option value="usbaudio"{{ settings['audio:device'] | selected_on('usbaudio') }}>Hi-Fi USB Audio</option>
-                <option value="pulse"{{ settings['audio:device'] | selected_on('pulse') }}>3.5mm Audio Jack (RasPi PWM)</option>
-                <option value="original"{{ settings['audio:device'] | selected_on('original') }}>RasPi Factory Default</option>
-            </select>
+        <li class="span4">
+            <h3>Bluetooth</h3>
+            <hr>
+            <form method="POST" action="{{ url_for('default.dashboard') }}">
+                <fieldset>
+                    <div class="device-options">
+                        <input type="hidden" name="namespace" value="bluetooth" />
 
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Save Config</button>
-                <button type="submit" name="restart" value="1" class="btn">Restart Audio Subsystem</button>
-            </div>
-        </fieldset>
-    </form>
+                        <label><i class="icon-signal"></i> Antenna</label>
+                        <label class="checkbox" for="enabled">
+                            <input type="checkbox" name="enabled" value="1" checked="checked" /> <i class="icon-bluetooth"></i> Enabled
+                        </label>
+                        
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </fieldset>
+            </form>
+        </li>
+    </ul>
+
+    <script type="text/javascript">
+        $(document).on('ready', function() {
+            $('.js-set-default').on('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                var inputs = $(this).closest('form').find('input.js-has-default');
+                $.each(inputs, function (index, e) {
+                    $(e).attr('value', $(e).attr('data-default'));
+                });
+            });
+        });
+    </script>
 
 {%- endblock -%}

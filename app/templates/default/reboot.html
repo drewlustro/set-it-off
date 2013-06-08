@@ -1,0 +1,23 @@
+{%- extends "layouts/default.html" -%}
+
+{%- block title -%}
+    Reboot Confirmation
+{%- endblock -%}
+
+{%- block content -%}
+    <h1>Are you sure you want to reboot?</h1>
+    <div class="well">
+        The device shouldn't take more than 15 seconds to come back online.
+    </div>
+    <form class="clearfix" method="POST" action="{{ url_for('default.reboot') }}">
+        <fieldset>
+            <div class="span4 offset2">
+                <a href="{{ url_for('default.dashboard') }}" class="btn btn-block btn-large">Cancel</a>
+            </div>
+            <div class="span4">
+                <button type="submit" class="btn btn-block btn-large btn-danger" name="reboot" value="1">Reboot Now</button>
+            </div>
+        </fieldset>
+    </form>
+    
+{%- endblock -%}

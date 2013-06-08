@@ -22,34 +22,23 @@ def dashboard():
         application.jinja_env.cache.clear()
         namespace = request.form.get('namespace', None)
         
-        if namespace == 'shairport':
-            print "shairport:edit"
+        
+
+        if namespace == ShairportService.namespace():
             ss = ShairportService()
-
             if ss.update_from_form(request.form):
-                flash("ShairportService updated & saved.")
-
-            if request.form.get('restart', False):
-                flash("ShairportService restarted.")
-                print "restarting"
+                flash("ShairportService updated & restarted.")
+                session['reboot_required'].add(ShairportService.namespace())
                 ss.restart()
-
             
             return redirect(url_for('.dashboard'))
 
-        elif namespace == 'audio':
-            print 'audio:edit'
-            ss = ShairportService()
+        elif namespace == AudioService.namespace():
             aservice = AudioService()
-
+            print 'audio:edit'
             if aservice.update_from_form(request.form):
                 flash("AudioDevice updated & saved.")
-
-            if request.form.get('restart', False):
-                flash("Audio Subsystem restarted.")
-                print "restarting audio"
-                aservice.restart()
-                ss.restart()
+                session['reboot_required'].add(AudioService.namespace())
 
             return redirect(url_for('.dashboard'))
 
@@ -62,6 +51,17 @@ def dashboard():
     settings['audio:device'] = DeploySetting.find_or_create_by_namespace_key('audio', 'device', 'usbaudio').value
 
     return render_template('default/dashboard.html', settings=settings)
+
+@controller.route('/reboot', methods=['GET', 'POST'])
+def reboot():
+    if request.method == 'POST' and request.form.get('reboot', False):
+        import subprocess
+        print "reboot"
+        session.pop('reboot_required')
+        subprocess.call('reboot', shell=True)
+    return render_template('default/reboot.html', hide_banners=True)
+
+
 
 
 @controller.route("/login", methods=['GET', 'POST'])

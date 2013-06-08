@@ -4,12 +4,19 @@ from app.lib import util
 class ShairportService(Service):
 
     config_file = 'shairport.config'
-    namespace = 'shairport'
     default_contents = 'AirPlaySpeaker'
+
+    @classmethod
+    def namespace(cls):
+        return 'shairport'
+
+    @classmethod
+    def display_name(cls):
+        raise 'Shairport Airplay Service'
 
     def update_from_form(self, form):
         from app.models import DeploySetting
-        ds = DeploySetting.find_or_create_by_namespace_key(self.namespace, 'speaker_name')
+        ds = DeploySetting.find_or_create_by_namespace_key(ShairportService.namespace(), 'speaker_name')
         speaker_name = util.filter_empty(form.get('speaker_name'), self.default_contents)
         speaker_name = util.slugify(speaker_name, force_lowercase=False)
         if (speaker_name != self.get()):

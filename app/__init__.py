@@ -43,6 +43,7 @@ def setup_request():
 def before_request():
     if not g.user:
         if 'user_id' in session:
+            session.setdefault('reboot_required', set())
             g.user = User.query.get(session['user_id'])
             if not g.user or g.user.deleted:
                 g.user = None
