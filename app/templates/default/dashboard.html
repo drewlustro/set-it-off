@@ -5,13 +5,51 @@
 {%- endblock -%}
 
 {%- block content -%}
-    <h2>Device Services Dashboard</h2>
+    <h2>Dashboard</h2>
     <p>
         Welcome to the admin interface for your sexy new RasPi appliance!
     </p>
-    <hr>
     {% include('shared/_flash_messages.html') %}
     <ul class="thumbnails services">
+        <li class="span12 hr-double">
+        </li>
+        <li class="span12 header">
+            <h4>System Status</h4>
+        </li>
+        <li class="span12 hr-single">
+        </li>
+        <li class="span6 level-2">
+            <div>
+                <h5>SD Card Space</h5>
+                <div class="progress progress-info">
+                    <div class="bar" style="width: {{ system_status_service.hdd_percent_consumed }};"></div>
+                </div>
+                <div class="system-output">
+                    Used: {{ (system_status_service.hdd_used / 1024) | format_number("{:,.2f}") }} MB
+                    ({{ system_status_service.hdd_percent_consumed }})
+                    <br />
+                    Free: {{ (system_status_service.hdd_free / 1024) | format_number("{:,.2f}") }} MB
+                    <br />
+                    Total: {{ (system_status_service.hdd_total / 1024 / 1024) | format_number("{:,.3f}") }} GB
+                </div>
+            </div>            
+        </li>
+        <li class="span6 level-2">
+                <h5>Memory</h5>
+                <div class="progress progress-warning">
+                    <div class="bar" style="width: {{ (system_status_service.mem_used / system_status_service.mem_total * 100) }}%;"></div>
+                </div>
+                <div class="system-output">
+                    Used: {{ (system_status_service.mem_used / 1024) | format_number("{:,.3f}") }} MB
+                    ({{ (system_status_service.mem_used / system_status_service.mem_total * 100) | format_number("{:,.1f}") }}%)
+                    <br />
+                    Free: {{ (system_status_service.mem_free / 1024) | format_number("{:,.3f}") }} MB
+                    <br />
+                    Total: {{ (system_status_service.mem_total / 1024) | format_number("{:,.3f}") }} MB
+                </div>
+        </li>
+        <li class="span12 hr-double">
+        </li>
         <li class="span4">
             <h4>Shairport AirPlay Audio</h4>
             <hr>
@@ -48,7 +86,6 @@
 
                         <label for="device"><h5><i class="icon-volume-up"></i> Preferred Audio Device</h5></label>
                         <select name="device"
-                                class="span4"
                                 class="js-has-default"
                                 multiple="multiple"
                                 data-default="usbaudio">
@@ -86,37 +123,7 @@
             </form>
         </li>
 
-        <li class="span4">
-            <h4>System Status</h4>
-            <hr>
-            <div>
-                <b>SD Card Space</b>
-                <div class="progress progress-info">
-                    <div class="bar" style="width: {{ system_status_service.hdd_percent_consumed }};"></div>
-                </div>
-                Used: {{ (system_status_service.hdd_used / 1024) | format_number("{:,.2f}") }} MB
-                ({{ system_status_service.hdd_percent_consumed }})
-                <br />
-                Free: {{ (system_status_service.hdd_free / 1024) | format_number("{:,.2f}") }} MB
-                <br />
-                Total: {{ (system_status_service.hdd_total / 1024 / 1024) | format_number("{:,.3f}") }} GB
-            </div>
-            <br />
-            <div>
-                <b>Memory</b>
-                <div class="progress progress-warning">
-                    <div class="bar" style="width: {{ (system_status_service.mem_used / system_status_service.mem_total * 100) }}%;"></div>
-                </div>
-                Used: {{ (system_status_service.mem_used / 1024) | format_number("{:,.3f}") }} MB
-                ({{ (system_status_service.mem_used / system_status_service.mem_total * 100) | format_number("{:,.1f}") }}%)
-                <br />
-                Free: {{ (system_status_service.mem_free / 1024) | format_number("{:,.3f}") }} MB
-                <br />
-                Total: {{ (system_status_service.mem_total / 1024) | format_number("{:,.3f}") }} MB
-            </div>
-            
-
-        </li>
+        
     </ul>
 
     <script type="text/javascript">

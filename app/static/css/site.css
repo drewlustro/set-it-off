@@ -29,7 +29,36 @@ footer {
 }
 
 .services li {
-    
+    box-sizing: border-box;
+}
+
+
+.level-1,
+.services li.level-1 {
+  padding-left: 11px;
+}
+
+.level-2,
+.services li.level-2 {
+  padding-left: 22px;
+}
+
+.services li.header {
+  margin-bottom: 0;
+}
+
+.services li.hr-single {
+  border-bottom: 1px solid #eaeaea;
+  margin-bottom: 13px;
+  padding-top: 5px;
+  height: 7px;
+}
+
+.services li.hr-double {
+  border-bottom: 3px double #eaeaea;
+  margin-bottom: 6px;
+  padding-top: 25px;
+  height: 1px;
 }
 
 .damon-bar-nav li {
@@ -40,6 +69,16 @@ footer {
 
 .damon-bar-nav li:last-child {
     border-right: none;
+}
+
+.system-output {
+    font-family: "Monaco", "Courier New", Courier, monspace;
+    font-size: 10px;
+    background: #0f0f0f;
+    color: #01ce28;
+    padding: 12px 20px 14px;
+    border-bottom: 2px solid #000;
+    text-shadow: 0 1px #000;
 }
 
 /**********************************
