@@ -11,7 +11,8 @@ class Service:
         from app import config
         self.filepath = path('%s/%s' % (config.SERVICE_CONFIG_DIR, self.config_file))
         self.data = {}
-        self.load_from_file()
+        self.load_config_from_file()
+        self.update()
 
     @classmethod
     def display_name(cls):
@@ -30,6 +31,13 @@ class Service:
     def get(self, key='__plaintext'):
         return self.data[key]
 
+    def update(self):
+        return self.update_from_system()
+
+    def update_from_system(self):
+        """Gets the result from several system commands and updates the DB"""
+        return True
+
     def update_from_form(self, form):
         return True
 
@@ -37,16 +45,16 @@ class Service:
         if (self.data['__plaintext']):
             return self.filepath.write_text(self.data['__plaintext'])
 
-    def load_from_file(self):
+    def load_config_from_file(self):
         try:
             filetext = self.read()
             if filetext:
-                print "Loaded from File: '%r'" % filetext
+                print "Loaded initial config from file: '%r'" % filetext
                 self.data['__plaintext'] = filetext
         except IOError as e:
             print "Init default file for %r" % (self)
             self.init_default_file()
-            self.load_from_file()
+            self.load_config_from_file()
 
     def read(self):
         return self.filepath.text()

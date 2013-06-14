@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, g, session, flash,\
     redirect, url_for, request
-from app.models import User, ShairportService, AudioService, DeploySetting
+from app.models import User, ShairportService, AudioService, SystemStatusService, DeploySetting
 from app.forms import LoginForm, SignupForm
 from app.lib import filters
 from app import application
@@ -17,7 +17,10 @@ def index():
 @controller.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
 
-    
+    shairport_service = ShairportService()
+    audio_service = AudioService()
+    system_status_service = SystemStatusService()
+
     if request.method == 'POST':
         application.jinja_env.cache.clear()
         namespace = request.form.get('namespace', None)
@@ -25,18 +28,16 @@ def dashboard():
         
 
         if namespace == ShairportService.namespace():
-            ss = ShairportService()
-            if ss.update_from_form(request.form):
+            if shairport_service.update_from_form(request.form):
                 flash("ShairportService updated & restarted.")
                 session['reboot_required'].add(ShairportService.namespace())
-                ss.restart()
+                shairport_service.restart()
             
             return redirect(url_for('.dashboard'))
 
         elif namespace == AudioService.namespace():
-            aservice = AudioService()
             print 'audio:edit'
-            if aservice.update_from_form(request.form):
+            if audio_service.update_from_form(request.form):
                 flash("AudioDevice updated & saved.")
                 session['reboot_required'].add(AudioService.namespace())
 
@@ -50,7 +51,10 @@ def dashboard():
     settings = {}
     settings['audio:device'] = DeploySetting.find_or_create_by_namespace_key('audio', 'device', 'usbaudio').value
 
-    return render_template('default/dashboard.html', settings=settings)
+    return render_template('default/dashboard.html', settings=settings,
+                           shairport_service=shairport_service,
+                           audio_service=audio_service,
+                           system_status_service=system_status_service)
 
 @controller.route('/reboot', methods=['GET', 'POST'])
 def reboot():

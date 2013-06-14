@@ -85,6 +85,23 @@
                 </fieldset>
             </form>
         </li>
+
+        <li class="span4">
+            <h4>System Status</h4>
+            <hr>
+            <b>SD Card Space</b>
+            <div class="progress progress-info">
+                <div class="bar" style="width: {{ system_status_service.hdd_percent_consumed }};"></div>
+            </div>
+            Used: {{ (system_status_service.hdd_used / 1024) | format_number("{:,.2f}") }} MB
+            ({{ system_status_service.hdd_percent_consumed }})
+            <br />
+            Free: {{ (system_status_service.hdd_free / 1024) | format_number("{:,.2f}") }} MB
+            <br />
+            Total: {{ (system_status_service.hdd_total / 1024 / 1024) | format_number("{:,.3f}") }} GB
+            
+
+        </li>
     </ul>
 
     <script type="text/javascript">

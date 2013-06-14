@@ -27,7 +27,6 @@ class AudioService(Service):
             self.save()
             return True
         return False
-    
 
     @property
     def device_display_name(self):
@@ -58,7 +57,6 @@ class AudioService(Service):
     def restart_command(self):
         return '/etc/init.d/shairport restart %s' % (self.device_display_name)
 
-
     def restart(self):
         commands = self.copy_config_file_commands()
         print "Copying config files..."
@@ -66,4 +64,3 @@ class AudioService(Service):
         commands = ['reboot']
         print "Running restart command"
         print self.run_commands(commands)
-
