@@ -15,6 +15,10 @@ class SystemStatusService(Service):
     hdd_percent_consumed = ''
     hdd_mountpoint = ''
 
+    mem_total = 0
+    mem_free = 0
+    mem_used = 0
+
     @classmethod
     def namespace(cls):
         return 'systemstatus'
@@ -27,7 +31,26 @@ class SystemStatusService(Service):
     def update_from_system(self):
         """Gets the result from several system commands and updates the DB"""
         self.update_hdd_capacity()
+        self.update_memory()
+        return True
 
+    def update_memory(self):
+        from app.models import DeploySetting
+        cmd = "free -k | grep Mem"
+        res = subprocess.check_output(cmd, shell=True)
+        data = res.split()
+        print cmd
+        print data
+        self.mem_total, self.mem_used, self.mem_free = int(data[1]), int(data[2]), int(data[3])
+        
+        keys = {'mem_total': self.mem_total,
+                'mem_used': self.mem_used,
+                'mem_free': self.mem_free }
+
+        for k, v in keys.iteritems():
+            ds = DeploySetting.find_or_create_by_namespace_key(SystemStatusService.namespace(), k)
+            ds.value = v
+            ds.save()
         return True
 
     def update_hdd_capacity(self):
