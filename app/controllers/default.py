@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, g, session, flash,\
     redirect, url_for, request
-from app.models import User, ShairportService, AudioService, SystemStatusService, DeploySetting
+from app.models import User, ShairportService, AudioService,\
+                        SystemStatusService, DeploySetting,\
+                        WifiService
 from app.forms import LoginForm, SignupForm
-from app.lib import filters
 from app import application
-from path import path
+
 
 controller = Blueprint("default", __name__, url_prefix="")
 
@@ -20,12 +21,11 @@ def dashboard():
     shairport_service = ShairportService()
     audio_service = AudioService()
     system_status_service = SystemStatusService()
+    wifi_service = WifiService()
 
     if request.method == 'POST':
         application.jinja_env.cache.clear()
         namespace = request.form.get('namespace', None)
-        
-        
 
         if namespace == ShairportService.namespace():
             if shairport_service.update_from_form(request.form):
@@ -41,6 +41,13 @@ def dashboard():
                 flash("AudioDevice updated & saved.")
                 session['reboot_required'].add(AudioService.namespace())
 
+            return redirect(url_for('.dashboard'))
+
+        elif namespace == WifiService.namespace():
+            print "wifi:edit"
+            if wifi_service.update_from_form(request.form):
+                flash("WiFi Radio updated & saved.")
+                session['reboot_required'].add(WifiService.namespace())
             return redirect(url_for('.dashboard'))
 
         else:
