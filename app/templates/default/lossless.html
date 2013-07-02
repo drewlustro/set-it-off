@@ -12,7 +12,7 @@
     <div class="playback-controls list-reset hidden">
         <ul>
             <li>
-                <a class="js-map-command btn btn-stop btn-list margin-top-20"
+                <a class="js-map-command btn btn-stop btn-list text-center"
                     href="javascript:void(0);"
                     data-control="stop"
                     data-command="{{ url_for('music.stop') }}">STOP PLAYBACK</a>
@@ -20,16 +20,27 @@
         </ul>
     </div>
 
-    <div class="album-list list-reset">
+    <div class="album-list list-reset margin-top-10">
         <ul>
         {% for a in player.albums %}
+            {% set songlist = player.songlist(a.namebase) %}
             <li>
-                <a class="js-map-command btn-list"
-                    data-command="{{ url_for('music.play_album', album=a.namebase) }}"
-                    data-control="play"
+                <a class="js-reveal btn-list btn-list-group"
+                    data-target="#album-{{ loop.index0 }}"
                     href="javascript:void(0);">{{ a.namebase }}</a>
-                <ul>
-                {% for s in player.songlist(a.namebase) %}
+                <ul id="album-{{ loop.index0 }}"
+                    class="song-list"
+                    data-expanded="false">
+                    <li>
+                        <a class="js-map-command btn-list btn-list-primary"
+                            data-command="{{ url_for('music.play_album', album=a.namebase) }}"
+                            data-control="play"
+                            href="javascript:void(0);">
+                            <i class="icon-play icon-white"></i> Play All {{ songlist|length }} Tracks
+                            </a>
+                    </li>
+
+                {% for s in songlist %}
                     <li>
                         <a class="js-map-command btn-list"
                         data-command="{{ url_for('music.play', song=s.namebase) }}"
@@ -44,8 +55,21 @@
     </div>
 
     <script>
-        var TEST;
         $(document).on('ready', function () {
+            $('.js-reveal').on('click', function () {
+                var targetId = $(this).attr('data-target');
+                var target = $(targetId);
+                if (target && target.attr('data-expanded') == 'false') {
+                    $('.btn-list-group').removeClass('active');
+                    $(this).addClass('active');
+                    $('.song-list').slideUp();
+                    $('.song-list').attr('data-expanded', 'false');
+                    $(target).slideDown(function () {
+                        target.attr('data-expanded', 'true');
+                    });
+                }
+            });
+
             $('.js-map-command').on('click', function () {
                 var command = $(this).attr('data-command');
                 var control = $(this).attr('data-control');
@@ -53,7 +77,6 @@
                 //console.log(command);
                 if (command) {
                     $.post(command, {}, function (json, status) {
-                        
                         if (json && json.status.code == 200) {
                             $('.js-map-command').removeClass('active');
                             if (control == "play") {
@@ -70,10 +93,7 @@
                                 $('.playback-controls').slideUp(function() {
                                     $('.playback-controls').addClass('hidden');
                                 });
-                                
                             }
-                            
-                            
                         }
                     }, 'json');
                 }
