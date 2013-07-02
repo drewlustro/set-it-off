@@ -5,26 +5,37 @@
 {%- endblock -%}
 
 {%- block pane_title -%}
-    <h1>Advanced</h1>
+    Advanced Options &amp; Diagnostics
 {%- endblock -%}
 
 {%- block content -%}
-    <p>
-        Everything else goes here.
-    </p>
-    <hr>
-    <form method="POST" action="{{ url_for('default.advanced') }}">
-        <fieldset>
-            <div class="form-submit-buttons">
-                <button type="submit" class="btn btn-block">
-                Restart Audio Services
-                </button>
-            </div> 
-        </fieldset>
-    </form>
-    <div class="form-submit-buttons">
-        <a href="{{ url_for('default.reboot') }}" class="btn btn-block">
-        Restart Device
-        </a>
+    <div class="margin-top-10 margin-bottom-10">
+        <ul class="list-reset">
+            <li>
+                <a class="btn btn-list" href="{{ url_for('default.reboot') }}">
+                    Software Update
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-list" href="{{ url_for('default.reboot') }}">
+                    MMDS Cloud Music Update
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-list" href="{{ url_for('default.reboot') }}">
+                    Restart Wireless Audio Services
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-list" href="{{ url_for('default.reboot') }}">
+                    Empty Playlist Queue
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-list btn-stop" href="{{ url_for('default.reboot') }}">
+                Restart Device
+                </a>
+            </li>
+        </ul>
     </div>
 {%- endblock -%}

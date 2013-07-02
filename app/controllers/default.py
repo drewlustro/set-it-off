@@ -9,10 +9,10 @@ from app import application
 
 controller = Blueprint("default", __name__, url_prefix="")
 
-
-@controller.route("/")
-def index():
-    return render_template('default/index.html')
+@controller.route('/', methods=['GET', 'POST'])
+def player():
+    player = MisterAudioPlayer()
+    return render_template('default/player.html', player=player)
 
 
 @controller.route('/dashboard', methods=['GET', 'POST'])
@@ -69,11 +69,6 @@ def airplay():
 def bluetooth():
     return render_template('default/bluetooth.html')
 
-@controller.route('/lossless', methods=['GET', 'POST'])
-def lossless():
-    player = MisterAudioPlayer()
-
-    return render_template('default/lossless.html', player=player)
 
 @controller.route('/advanced', methods=['GET', 'POST'])
 def advanced():

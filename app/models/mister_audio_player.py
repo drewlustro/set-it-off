@@ -3,25 +3,26 @@ from path import path
 import os
 import sys
 import subprocess
+from app import config
 
 class MisterAudioPlayer:
 
     pid = None
     albums_path = None
     albums = None
+    songs = None
     song_count = None
     daemon_subprocess = None
     command = None
 
     def __init__(self):
-        self.albums_path = path('/music/')
+        self.albums_path = path(config.MUSIC_DIR)
         self.albums = self.albums_path.dirs()
 
+
     def play(self, song_name, interrupt_playing_song=True):
-        print "Play %r" % song_name
         song = self.find_song(song_name)
         if song is not None:
-            print "Found song!"
             if interrupt_playing_song:
                 SongPlayJob.kill_current_song()
             util.get_resq().enqueue(SongPlayJob, song)
@@ -39,9 +40,7 @@ class MisterAudioPlayer:
                 if interrupt_playing_song and len(songlist) > 0:
                     self.stop()
                 for song in songlist:
-                    print "Playlist +: %s" % song.namebase
                     util.get_resq().enqueue(SongPlayJob, song)
-                print "Added %d songs to playlist" % len(songlist)
                 return True
         return False
 
