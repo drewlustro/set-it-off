@@ -24,27 +24,32 @@
     </head>
     <body>
         <div class="container">
-        <div class="pane-title">
-            {%- block pane_title -%}
-            {%- endblock -%}
-        </div>
-        <div class="pane-content">
-            {% include('shared/_flash_messages.html') %}
-            {%- block content -%}
-            {%- endblock -%}
-        </div>
-        <div class="settings-navigation">
-            <ul>
-                <li><a href="{{ url_for('default.status') }}">Status</a></li>
-                <li><a href="{{ url_for('default.airplay') }}">AirPlay</a></li>
-                <li><a href="{{ url_for('default.bluetooth') }}">Bluetooth</a></li>
-                <li><a href="{{ url_for('default.lossless') }}">Lossless Playback</a></li>
-                <li><a href="{{ url_for('default.advanced') }}">Advanced</a></li>
-            </ul>
-        </div>
-        <footer>
-            &copy; 2013 Drew Lustro
-        </footer>
+            <header class="logo">
+                <a href="{{ url_for('default.status') }}">
+                    <img src="/static/img/mister-audio-icon.png" />
+                </a>
+            </header>
+            <div class="pane-title">
+                {%- block pane_title -%}
+                {%- endblock -%}
+            </div>
+            <div class="pane-content">
+                {% include('shared/_flash_messages.html') %}
+                {%- block content -%}
+                {%- endblock -%}
+            </div>
+            <div class="settings-navigation">
+                <ul>
+                    <li><a href="{{ url_for('default.status') }}">Status</a></li>
+                    <li><a href="{{ url_for('default.airplay') }}">AirPlay</a></li>
+                    <li><a href="{{ url_for('default.bluetooth') }}">Bluetooth</a></li>
+                    <li><a href="{{ url_for('default.lossless') }}">Lossless Playback</a></li>
+                    <li><a href="{{ url_for('default.advanced') }}">Advanced</a></li>
+                </ul>
+            </div>
+            <footer>
+                &copy; 2013 Drew Lustro
+            </footer>
         </div>
     </body>
   </html>

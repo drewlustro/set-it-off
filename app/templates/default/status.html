@@ -5,16 +5,13 @@
 {%- endblock -%}
 
 {%- block pane_title -%}
-    <h1>Device Status</h1>
+    Device Status
 {%- endblock -%}
 
 {%- block content -%}
+    
     <div>
-        <h2>IP Address</h2>
-        <p>The IP address of this device is 192.168.1.10</p>
-    </div>
-    <div>
-        <h2>SD Card Space</h2>
+        <h4>Hard Drive Space</h4>
         <div class="progress progress-info">
             <div class="bar" style="width: {{ system_status_service.hdd_percent_consumed }};"></div>
         </div>
@@ -28,7 +25,7 @@
         </div>
     </div>
     <div>
-        <h2>Memory</h2>
+        <h4>System Memory</h4>
         <div class="progress progress-warning">
             <div class="bar" style="width: {{ (system_status_service.mem_used / system_status_service.mem_total * 100) }}%;"></div>
         </div>
@@ -40,5 +37,9 @@
             <br />
             Total: {{ (system_status_service.mem_total / 1024) | format_number("{:,.3f}") }} MB
         </div>
+    </div>
+    <div>
+        <h4>IP Address</h4>
+        <p>The IP address of this device is 192.168.1.10</p>
     </div>
 {%- endblock -%}

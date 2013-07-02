@@ -5,14 +5,10 @@
 {%- endblock -%}
 
 {%- block pane_title -%}
-    <h1>Bluetooth</h1>
+    Bluetooth 4.0
 {%- endblock -%}
 
 {%- block content -%}
-    <p>
-        The Bluetooth (4.0) service provides wireless audio to Android &amp; iOS devices.
-    </p>
-    <hr>
     <form method="POST" action="{{ url_for('default.bluetooth') }}">
         <fieldset>
             <div class="device-options">
@@ -26,7 +22,7 @@
                 <span class="help-block">Look to pair with this device over bluetooth.</span>
             </div>
             <div class="form-submit-buttons">
-                <button type="submit" class="btn btn-block btn-primary">Save</button>
+                <button type="submit" class="btn btn-save btn-block">Save</button>
             </div> 
             
         </fieldset>

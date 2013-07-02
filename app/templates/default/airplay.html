@@ -5,28 +5,23 @@
 {%- endblock -%}
 
 {%- block pane_title -%}
-    <h1>Airplay</h1>
+    Airplay
 {%- endblock -%}
 
 {%- block content -%}
-    <p>
-        The airplay service provides streaming audio over WiFi from iOS devices.
-    </p>
-    <hr>
     <form method="POST" action="{{ url_for('default.airplay') }}">
         <fieldset>
             <div class="device-options">
-                <label for="speaker_name"><h5><i class="icon-music"></i> Speaker Name</h5></label>
+                <label for="speaker_name"><h5><i class="icon-music"></i>AirPlay Speaker Name</h5></label>
                 <input type="text"
                         class="span4"
                         name="speaker_name"
                         placeholder="Enter a name..."
                         data-default="AirPlaySpeaker"
                         value="{{ 'speaker_name' | deploy_setting('shairport') }}" />
-                <span class="help-block">Advertises this name over wi-fi.</span>
             </div>
             <div class="form-submit-buttons">
-                <button type="submit" class="btn btn-block btn-primary">Save</button>
+                <button type="submit" class="btn btn-save btn-block">Save</button>
             </div> 
             
         </fieldset>
