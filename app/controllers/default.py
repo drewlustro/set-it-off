@@ -17,10 +17,9 @@ def index():
 
 @controller.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
-
+    return render_template('default/status.html')
     shairport_service = ShairportService()
     audio_service = AudioService()
-    system_status_service = SystemStatusService()
     wifi_service = WifiService()
 
     if request.method == 'POST':
@@ -35,21 +34,6 @@ def dashboard():
             
             return redirect(url_for('.dashboard'))
 
-        elif namespace == AudioService.namespace():
-            print 'audio:edit'
-            if audio_service.update_from_form(request.form):
-                flash("AudioDevice updated & saved.")
-                session['reboot_required'].add(AudioService.namespace())
-
-            return redirect(url_for('.dashboard'))
-
-        elif namespace == WifiService.namespace():
-            print "wifi:edit"
-            if wifi_service.update_from_form(request.form):
-                flash("WiFi Radio updated & saved.")
-                session['reboot_required'].add(WifiService.namespace())
-            return redirect(url_for('.dashboard'))
-
         else:
 
             flash("Error saving shairport data.")
@@ -62,6 +46,36 @@ def dashboard():
                            shairport_service=shairport_service,
                            audio_service=audio_service,
                            system_status_service=system_status_service)
+
+@controller.route('/status', methods=['GET', 'POST'])
+def status():
+    system_status_service = SystemStatusService()
+    return render_template('default/status.html',
+                           system_status_service=system_status_service)
+
+@controller.route('/airplay', methods=['GET', 'POST'])
+def airplay():
+    shairport_service = ShairportService()
+    if request.method == 'POST':
+        application.jinja_env.cache.clear()
+        if shairport_service.update_from_form(request.form):
+            flash("AirPlay Service updated & restarted.")
+            session['reboot_required'].add(ShairportService.namespace())
+            shairport_service.restart()
+            return redirect(url_for('.airplay'))
+    return render_template('default/airplay.html')
+
+@controller.route('/bluetooth', methods=['GET', 'POST'])
+def bluetooth():
+    return render_template('default/bluetooth.html')
+
+@controller.route('/lossless', methods=['GET', 'POST'])
+def lossless():
+    return render_template('default/lossless.html')
+
+@controller.route('/advanced', methods=['GET', 'POST'])
+def advanced():
+    return render_template('default/advanced.html')
 
 @controller.route('/reboot', methods=['GET', 'POST'])
 def reboot():

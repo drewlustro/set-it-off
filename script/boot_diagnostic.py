@@ -45,9 +45,7 @@ def request_value_with_options(question, options=None):
             return res
         if not options or len(options) <= 0:
             return res
-        br()
-        print "Invalid input '%s'. Please choose from the available options in brackets." % (res, )
-        br()
+        print "[Error] Invalid input '%s'. Please choose from the available options in brackets." % (res, )
 
 br()
 hr()
@@ -95,12 +93,9 @@ if do_wifi_setup == 'yes':
                                          config_param_options[p])
         if res is not None:
             config_param_values[p] = res
-        br()
     hr()
-
-    br()
-    print "Collected values:"
-    print config_param_values
+    #print "Collected values:"
+    #print config_param_values
 
     wifi_service = WifiService()
     wifi_service.essid = config_param_values['essid']

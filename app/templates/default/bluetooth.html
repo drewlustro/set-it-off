@@ -1,0 +1,34 @@
+{%- extends "layouts/default.html" -%}
+
+{%- block title -%}
+    Bluetooth
+{%- endblock -%}
+
+{%- block pane_title -%}
+    <h1>Bluetooth</h1>
+{%- endblock -%}
+
+{%- block content -%}
+    <p>
+        The Bluetooth (4.0) service provides wireless audio to Android &amp; iOS devices.
+    </p>
+    <hr>
+    <form method="POST" action="{{ url_for('default.bluetooth') }}">
+        <fieldset>
+            <div class="device-options">
+                <label for="speaker_name"><h5><i class="icon-music"></i> Bluetooth Device Name</h5></label>
+                <input type="text"
+                        class="span4"
+                        name="speaker_name"
+                        placeholder="Enter a name..."
+                        data-default="BluetoothSpeaker"
+                        value="{{ 'speaker_name' | deploy_setting('bluetooth') }}" />
+                <span class="help-block">Look to pair with this device over bluetooth.</span>
+            </div>
+            <div class="form-submit-buttons">
+                <button type="submit" class="btn btn-block btn-primary">Save</button>
+            </div> 
+            
+        </fieldset>
+    </form>
+{%- endblock -%}

@@ -1,0 +1,30 @@
+{%- extends "layouts/default.html" -%}
+
+{%- block title -%}
+    Advanced
+{%- endblock -%}
+
+{%- block pane_title -%}
+    <h1>Advanced</h1>
+{%- endblock -%}
+
+{%- block content -%}
+    <p>
+        Everything else goes here.
+    </p>
+    <hr>
+    <form method="POST" action="{{ url_for('default.advanced') }}">
+        <fieldset>
+            <div class="form-submit-buttons">
+                <button type="submit" class="btn btn-block">
+                Restart Audio Services
+                </button>
+            </div> 
+        </fieldset>
+    </form>
+    <div class="form-submit-buttons">
+        <a href="{{ url_for('default.reboot') }}" class="btn btn-block">
+        Restart Device
+        </a>
+    </div>
+{%- endblock -%}

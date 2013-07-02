@@ -4,18 +4,23 @@
     Reboot Confirmation
 {%- endblock -%}
 
+{%- block pane_title -%}
+    <h1>Reboot Device</h1>
+{% endblock %}
+
 {%- block content -%}
-    <h1>Are you sure you want to reboot?</h1>
+    <h3>Are you sure you want to reboot?</h3>
     <div class="well">
         The device shouldn't take more than 15 seconds to come back online.
     </div>
     <form class="clearfix" method="POST" action="{{ url_for('default.reboot') }}">
         <fieldset>
-            <div class="span4 offset2">
-                <a href="{{ url_for('default.dashboard') }}" class="btn btn-block btn-large">Cancel</a>
-            </div>
             <div class="span4">
-                <button type="submit" class="btn btn-block btn-large btn-danger" name="reboot" value="1">Reboot Now</button>
+                <a href="{{ url_for('default.status') }}" class="btn btn-block btn-large">No, Go Back</a>
+            </div>
+            <br /><br />
+            <div class="span4">
+                <button type="submit" class="btn btn-block btn-large btn-danger" name="reboot" value="1">Yes, Reboot Now</button>
             </div>
         </fieldset>
     </form>
