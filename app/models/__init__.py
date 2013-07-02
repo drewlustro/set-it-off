@@ -4,3 +4,4 @@ from shairport_service import ShairportService
 from audio_service import AudioService
 from system_status_service import SystemStatusService
 from wifi_service import WifiService
+from mister_audio_player import MisterAudioPlayer

@@ -13,4 +13,36 @@
         Provides playback of locally-stored music and supports FLAC, a lossless
         audio format.
     </p>
+    <div class="album-list">
+        <ul>
+        {% for a in player.albums %}
+            <li>
+                <strong>{{ a.namebase }}</strong>
+                <hr>
+                <ul>
+                {% for s in player.songlist(a.namebase) %}
+                    <li>
+                        <a class="js-map-play" data-song="{{ url_for('music.play', song=s.namebase) }}" href="#">{{ s.namebase }}</a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <script>
+        $(document).on('ready', function () {
+            $('.js-map-play').on('click', function () {
+                var song = $(this).attr('data-song');
+                console.log("play " + song);
+                if (song) {
+                    $.post(song, {}, function (result) {
+                        console.log(result);
+                    });
+                }
+            });
+        });
+        
+    </script>
 {%- endblock -%}

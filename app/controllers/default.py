@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, g, session, flash,\
     redirect, url_for, request
 from app.models import User, ShairportService, AudioService,\
                         SystemStatusService, DeploySetting,\
-                        WifiService
+                        WifiService, MisterAudioPlayer
 from app.forms import LoginForm, SignupForm
 from app import application
 
@@ -71,7 +71,9 @@ def bluetooth():
 
 @controller.route('/lossless', methods=['GET', 'POST'])
 def lossless():
-    return render_template('default/lossless.html')
+    player = MisterAudioPlayer()
+
+    return render_template('default/lossless.html', player=player)
 
 @controller.route('/advanced', methods=['GET', 'POST'])
 def advanced():
