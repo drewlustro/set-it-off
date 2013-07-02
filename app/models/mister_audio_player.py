@@ -1,11 +1,10 @@
 from app.lib import util
-from app.lib import Daemon
 from path import path
 import os
 import sys
 import subprocess
 
-class MisterAudioPlayer(Daemon):
+class MisterAudioPlayer:
 
     pid = None
     albums_path = None
@@ -15,46 +14,42 @@ class MisterAudioPlayer(Daemon):
     command = None
 
     def __init__(self):
-        super(MisterAudioPlayer, self).__init__("/tmp/mister_audio_player.pid")
         self.albums_path = path('/music/')
         self.albums = self.albums_path.dirs()
 
-    def run_batch(self):
-        batch_cmd = "batch <<< '%s'" % self.command
-        print "BATCH:"
-        print batch_cmd
-        print ""
-        subprocess.call(batch_cmd, shell=True)
-        return True
-
-    def run(self):
-        print "Running subprocess"
-        if self.daemon_subprocess:
-            print "Forking Daemon"
-            self.daemon_subprocess()
-        return 0
-
-    def play(self, songname):
-        print "Play %r" % songname
-        song = self.find_song(songname)
+    def play(self, song_name, interrupt_playing_song=True):
+        print "Play %r" % song_name
+        song = self.find_song(song_name)
         if song is not None:
             print "Found song!"
-            cmd = '/usr/local/bin/flac123 "%s"' % song
-            self.command = cmd
-            def play_subprocess():
-                
-                print cmd
-                subprocess.call(['/usr/local/bin/flac123', song])
-                return 0
-            #spawn_daemon(play_subprocess)
-            self.daemon_subprocess = play_subprocess
+            if interrupt_playing_song:
+                SongPlayJob.kill_current_song()
+            util.get_resq().enqueue(SongPlayJob, song)
             return True
         return False
 
-    def find_song(self, songname):
+    def stop(self):
+        SongPlayJob.empty_playlist()
+        SongPlayJob.kill_current_song()
+
+    def play_album(self, album_name, interrupt_playing_song=True):
         for a in self.albums:
-            for s in a.files('*.flac'):
-                if s.namebase == songname:
+            if a.namebase == album_name:
+                songlist = self.songlist(album_name)
+                if interrupt_playing_song and len(songlist) > 0:
+                    self.stop()
+                for song in songlist:
+                    print "Playlist +: %s" % song.namebase
+                    util.get_resq().enqueue(SongPlayJob, song)
+                print "Added %d songs to playlist" % len(songlist)
+                return True
+        return False
+
+    def find_song(self, song_name):
+        for a in self.albums:
+            songlist = self.songlist(a.namebase)
+            for s in songlist:
+                if s.namebase == song_name:
                     return s
         return None
 
@@ -64,40 +59,45 @@ class MisterAudioPlayer(Daemon):
             if a.namebase == album_name:
                 album = a
                 break
+        songs = []
         if album is not None:
-            songs = album.files('*.flac')
-            print "Songs for %r" % album
+            songs += album.files('*.flac')
+            songs += album.files('*.mp3')
             songs.sort()
+
             return songs
         return None
 
+    
 
-def spawn_daemon(func):
-    # do the UNIX double-fork magic, see Stevens' "Advanced 
-    # Programming in the UNIX Environment" for details (ISBN 0201563177)
-    # try: 
-    #     pid = os.fork() 
-    #     if pid > 0:
-    #         # parent process, return and keep running
-    #         return
-    # except OSError, e:
-    #     print >>sys.stderr, "fork #1 failed: %d (%s)" % (e.errno, e.strerror) 
-    #     sys.exit(1)
+class SongPlayJob(object):
+    queue = 'songplay'
 
-    os.setsid()
+    @staticmethod
+    def empty_playlist():
+        util.get_resq().remove_queue('songplay')
+        return True
 
-    # do second fork
-    try: 
-        pid = os.fork() 
-        if pid > 0:
-            # exit from second parent
-            sys.exit(0) 
-    except OSError, e: 
-        print >>sys.stderr, "fork #2 failed: %d (%s)" % (e.errno, e.strerror) 
-        sys.exit(1)
+    @staticmethod
+    def kill_current_song():
+        cmd = 'pkill -f flac123'
+        subprocess.call(cmd, shell=True)
+        cmd = 'pkill -f mpg123'
+        subprocess.call(cmd, shell=True)
+        return True
 
-    # do stuff
-    func()
+    @staticmethod
+    def perform(songpath):
+        print "Running Job for %r" % songpath
+        songpath = path(songpath)
+        if songpath.ext == '.flac':
+            cmd = 'flac123 "%s"' % songpath
+        elif songpath.ext == '.mp3':
+            cmd = 'mpg123 "%s"' % songpath
+        else:
+            print "Unsupported audio filetype: %r" % songpath.ext
+            return
 
-    # all done
-    os._exit(os.EX_OK)
+        subprocess.call(cmd, shell=True)
+        return True
+

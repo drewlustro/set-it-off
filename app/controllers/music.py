@@ -11,10 +11,16 @@ controller = Blueprint("music", __name__, url_prefix="/music")
 def play(song):
     player = MisterAudioPlayer()
     message = "Play song %r" % song
-    print message
-    if player.play(song):
-        player.run_batch()
-    return util.render_json(200, {'message': message})
+    player.play(song)
+        
+    return util.render_json(200, {'song': song})
+
+@controller.route("/play/album/<string:album>", methods=['GET', 'POST'])
+def play_album(album):
+    player = MisterAudioPlayer()
+    message = "Play album %r" % album
+    player.play_album(album)
+    return util.render_json(200, {'album': album})
 
 
 # @controller.route("/pause", methods=['GET', 'POST'])
@@ -25,8 +31,9 @@ def play(song):
 
 @controller.route("/stop", methods=['GET', 'POST'])
 def stop():
-    message = "Stop song"
-    print message
-    return util.render_json(200, {'message': message})
+    message = "Stop all songs"
+    player = MisterAudioPlayer()
+    player.stop()
+    return util.render_json(200, {})
 
 
