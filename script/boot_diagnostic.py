@@ -90,6 +90,8 @@ if do_software_update == 'yes':
     print "SOFTWARE UPDATE"
     hr()
     output = subprocess.check_output(cmd, shell=True)
+    cmd = "sudo chown -R pi:pi /sites"
+    output += subprocess.check_output(cmd, shell=True)
     print output
     hr()
 

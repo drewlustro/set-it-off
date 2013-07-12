@@ -39,6 +39,8 @@ class SystemStatusService(Service):
     def software_update(self):
         cmd = "git --git-dir=/sites/set-it-off/.git --work-tree=/sites/set-it-off/ pull origin release"
         output = subprocess.check_output(cmd, shell=True)
+        cmd = "sudo chown -R pi:pi /sites"
+        output += subprocess.check_output(cmd, shell=True)
         return output
 
     def update_memory(self):
