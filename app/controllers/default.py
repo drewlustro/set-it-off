@@ -107,8 +107,8 @@ def software_update():
     sss = SystemStatusService()
     output = sss.software_update()
     flash(output)
-    if output == 'Already up-to-date.':
-        pass
+    if output != 'Already up-to-date.':
+        flash('You must reboot the device for updates to take effect!')
     return redirect(url_for('default.advanced'))
 
 @controller.route('/restart_audio', methods=['GET', 'POST'])
