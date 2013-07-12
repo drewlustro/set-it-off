@@ -109,7 +109,7 @@ def software_update():
     output = sss.software_update()
     flash(output)
     if output == 'Already up-to-date.':
-        
+        pass
     return redirect(url_for('default.advanced'))
 
 @controller.route('/restart_audio', methods=['GET', 'POST'])
