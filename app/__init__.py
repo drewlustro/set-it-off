@@ -5,6 +5,8 @@ from app.models import User
 from app.lib import error, util
 from app import config as config_module
 
+
+
 application = Flask(__name__)
 application.secret_key = '4m1t4m1t4m1t4m1t4m1t4m1t4m1t4m1t4m1t4m1t'
 application.config.from_object(config_module)
@@ -13,8 +15,19 @@ application.config.from_object(config_module)
 # Error Logging
 # ----------------------------------------------------------------------------
 if os.environ.get('FLASK_ENV', None) == 'production':
-    application.logger.addHandler(error.get_mail_handler())
-    application.logger.addHandler(error.get_hipchat_handler())
+    import logging
+    file_handler = logging.FileHandler('/sites/logs/setitoff-flask.log')
+    file_handler.setLevel(logging.DEBUG)
+    
+    file_handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s: %(message)s '
+        '[in %(pathname)s:%(lineno)d]'
+    ))
+    application.logger.addHandler(file_handler)
+
+
+    #application.logger.addHandler(error.get_mail_handler())
+    #application.logger.addHandler(error.get_hipchat_handler())
 
 
 # ----------------------------------------------------------------------------
