@@ -107,7 +107,7 @@ def software_update():
     sss = SystemStatusService()
     output = sss.software_update()
     flash(output)
-    if output != 'Already up-to-date.':
+    if output != 'Already up-to-date.\n':
         flash('You must reboot the device for updates to take effect!')
     return redirect(url_for('default.advanced'))
 
