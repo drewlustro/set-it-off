@@ -5,6 +5,8 @@ from app.models import User, ShairportService, AudioService,\
                         WifiService, MisterAudioPlayer
 from app.forms import LoginForm, SignupForm
 from app import application
+
+import subprocess
 import sys
 
 controller = Blueprint("default", __name__, url_prefix="")
@@ -78,7 +80,6 @@ def advanced():
 @controller.route('/reboot', methods=['GET', 'POST'])
 def reboot():
     if request.method == 'POST' and request.form.get('reboot', False):
-        import subprocess
         print "reboot"
         session.pop('reboot_required')
         try:
