@@ -84,7 +84,13 @@ def reboot():
         try:
             subprocess.call('sudo reboot', shell=True)
         except subprocess.CalledProcessError as e:
-            flash("Error: %s" % (e))
+            flash("CalledProcessError: %s" % (e))
+            return redirect(url_for('.reboot'))
+        except OSError as e:
+            flash("OSError: %s" % (e))
+            return redirect(url_for('.reboot'))
+        except ValueError as e:
+            flash("ValueError: %s" % (e))
             return redirect(url_for('.reboot'))
     return render_template('default/reboot.html', hide_banners=True)
 
