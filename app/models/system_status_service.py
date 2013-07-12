@@ -27,11 +27,13 @@ class SystemStatusService(Service):
     def display_name(self):
         raise 'System Status Reporting'
 
+    def query_system(self):
+        self.update_hdd_capacity()
+        self.update_memory()
+
 
     def update_from_system(self):
         """Gets the result from several system commands and updates the DB"""
-        self.update_hdd_capacity()
-        self.update_memory()
         return True
 
     def software_update(self):

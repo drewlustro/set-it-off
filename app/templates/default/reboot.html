@@ -15,12 +15,15 @@
     </div>
     <form class="clearfix" method="POST" action="{{ url_for('default.reboot') }}">
         <fieldset>
-            <div class="span4">
-                <a href="{{ url_for('default.status') }}" class="btn btn-block btn-large">No, Go Back</a>
-            </div>
-            <br /><br />
-            <div class="span4">
-                <button type="submit" class="btn btn-block btn-large btn-danger" name="reboot" value="1">Yes, Reboot Now</button>
+            <div class="margin-top-10 margin-bottom-10">
+                <ul class="list-reset">
+                    <li>
+                        <a href="{{ url_for('default.advanced') }}" class="btn btn-list">No, Go Back</a>
+                    </li>
+                    <li>
+                        <button type="submit" class="btn btn-list btn-block btn-stop" name="reboot" value="1">Yes, Reboot Now</button>
+                    </li>
+                </ul>
             </div>
         </fieldset>
     </form>

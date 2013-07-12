@@ -50,6 +50,7 @@ def dashboard():
 @controller.route('/status', methods=['GET', 'POST'])
 def status():
     system_status_service = SystemStatusService()
+    system_status_service.query_system()
     return render_template('default/status.html',
                            system_status_service=system_status_service)
 
