@@ -9,7 +9,7 @@ from app import application
 
 controller = Blueprint("default", __name__, url_prefix="")
 
-@controller.route('/', methods=['GET', 'POST'])
+@controller.route('/player', methods=['GET', 'POST'])
 def player():
     player = MisterAudioPlayer()
     return render_template('default/player.html', player=player)
@@ -47,7 +47,7 @@ def dashboard():
                            audio_service=audio_service,
                            system_status_service=system_status_service)
 
-@controller.route('/status', methods=['GET', 'POST'])
+@controller.route('/', methods=['GET', 'POST'])
 def status():
     system_status_service = SystemStatusService()
     system_status_service.query_system()
@@ -81,7 +81,11 @@ def reboot():
         import subprocess
         print "reboot"
         session.pop('reboot_required')
-        subprocess.call('reboot', shell=True)
+        try:
+            subprocess.call('sudo reboot', shell=True)
+        except subprocess.CalledProcessError as e:
+            flash("Error: %s" % (e))
+            return redirect(url_for('.reboot'))
     return render_template('default/reboot.html', hide_banners=True)
 
 

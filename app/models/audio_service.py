@@ -19,28 +19,28 @@ class AudioService(Service):
     def restart_audio(self):
         output = ''
         try:
-            cmd = '/etc/init.d/alsa-utils restart'
+            cmd = 'sudo /etc/init.d/alsa-utils restart'
             output += subprocess.check_output(cmd, shell=True)
         except subprocess.CalledProcessError as e:
             output += 'Error restarting alsa-utils!<br>'
             output += '%s <br>' % (e)
 
         try:
-            cmd = '/etc/init.d/pulseaudio restart'
+            cmd = 'sudo /etc/init.d/pulseaudio restart'
             output += subprocess.check_output(cmd, shell=True)
         except subprocess.CalledProcessError as e:
             output += 'Error restarting pulseaudio!<br>'
             output += '%s <br>' % (e)
 
         try:
-            cmd = '/etc/init.d/shairport restart'
+            cmd = 'sudo /etc/init.d/shairport restart'
             output += subprocess.check_output(cmd, shell=True)
         except subprocess.CalledProcessError as e:
             output += 'Error restarting shairport (airplay)!<br>'
             output += '%s <br>' % (e)
 
         try: 
-            cmd = '/etc/init.d/bluetooth-agent restart'
+            cmd = 'sudo /etc/init.d/bluetooth-agent restart'
             output += subprocess.check_output(cmd, shell=True)
         except subprocess.CalledProcessError as e:
             output += 'Error restarting bluetooth-agent!<br>'
@@ -81,13 +81,13 @@ class AudioService(Service):
         return commands
 
     def start_command(self):
-        return '/etc/init.d/shairport start %s' % (self.device_display_name)
+        return 'sudo /etc/init.d/shairport start %s' % (self.device_display_name)
 
     def stop_command(self):
-        return '/etc/init.d/shairport stop'
+        return 'sudo /etc/init.d/shairport stop'
 
     def restart_command(self):
-        return '/etc/init.d/shairport restart %s' % (self.device_display_name)
+        return 'sudo /etc/init.d/shairport restart %s' % (self.device_display_name)
 
     def restart(self):
         commands = self.copy_config_file_commands()
