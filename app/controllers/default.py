@@ -81,7 +81,6 @@ def advanced():
 def reboot():
     if request.method == 'POST' and request.form.get('reboot', False):
         print "reboot"
-        session.pop('reboot_required')
         try:
             subprocess.call('sudo reboot', shell=True)
         except subprocess.CalledProcessError as e:
