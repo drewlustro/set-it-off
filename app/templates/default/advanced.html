@@ -12,25 +12,29 @@
     <div class="margin-top-10 margin-bottom-10">
         <ul class="list-reset">
             <li>
-                <a class="btn btn-list" href="{{ url_for('default.reboot') }}">
+                <a class="btn btn-list" href="{{ url_for('default.software_update') }}">
                     Software Update
                 </a>
             </li>
+            <!--
             <li>
                 <a class="btn btn-list" href="{{ url_for('default.reboot') }}">
                     MMDS Cloud Music Update
                 </a>
             </li>
+            -->
             <li>
-                <a class="btn btn-list" href="{{ url_for('default.reboot') }}">
+                <a class="btn btn-list" href="{{ url_for('default.restart_audio') }}">
                     Restart Wireless Audio Services
                 </a>
             </li>
+            <!--
             <li>
                 <a class="btn btn-list" href="{{ url_for('default.reboot') }}">
                     Empty Playlist Queue
                 </a>
             </li>
+            -->
             <li>
                 <a class="btn btn-list btn-stop" href="{{ url_for('default.reboot') }}">
                 Restart Device

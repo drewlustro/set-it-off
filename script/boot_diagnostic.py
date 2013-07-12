@@ -39,7 +39,7 @@ def request_value_with_options(question, options=None):
         question = "%s %r (or enter 'x' to cancel): " % (question, options)
     while True:
         res = raw_input(question)
-        if res == 'x':
+        if res == 'x' or res == '':
             return None
         if res in options:
             return res
@@ -82,6 +82,19 @@ for iface, ip in ip_addresses.iteritems():
     hr()
 
 br()
+
+do_software_update = request_value_with_options('Do software update?', ['yes', 'no'])
+if do_software_update == 'yes':
+    cmd = "git --git-dir=/sites/set-it-off/.git --work-tree=/sites/set-it-off/ pull origin release"
+    br()
+    print "SOFTWARE UPDATE"
+    hr()
+    output = subprocess.check_output(cmd, shell=True)
+    print output
+    hr()
+
+br()
+
 
 do_wifi_setup = request_value_with_options('Perform WiFi setup?', ['yes', 'no'])
 if do_wifi_setup == 'yes':

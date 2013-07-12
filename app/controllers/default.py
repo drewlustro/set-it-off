@@ -84,6 +84,20 @@ def reboot():
     return render_template('default/reboot.html', hide_banners=True)
 
 
+@controller.route('/software_update', methods=['GET', 'POST'])
+def software_update():
+    sss = SystemStatusService()
+    output = sss.software_update()
+    flash(output)
+    return redirect(url_for('default.advanced'))
+
+@controller.route('/restart_audio', methods=['GET', 'POST'])
+def restart_audio():
+    audio_service = AudioService()
+    output = audio_service.restart_audio()
+    flash(output)
+    return redirect(url_for('default.advanced'))
+
 
 
 @controller.route("/login", methods=['GET', 'POST'])

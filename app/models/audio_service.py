@@ -1,5 +1,6 @@
 from app.lib import Service
 from app.lib import util
+import subprocess
 
 class AudioService(Service):
 
@@ -14,6 +15,37 @@ class AudioService(Service):
     @property
     def display_name(self):
         raise 'Linux Audio Subsystem'
+
+    def restart_audio(self):
+        output = ''
+        try:
+            cmd = '/etc/init.d/alsa-utils restart'
+            output += subprocess.check_output(cmd, shell=True)
+        except subprocess.CalledProcessError as e:
+            output += 'Error restarting alsa-utils!<br>'
+            output += '%s <br>' % (e)
+
+        try:
+            cmd = '/etc/init.d/pulseaudio restart'
+            output += subprocess.check_output(cmd, shell=True)
+        except subprocess.CalledProcessError as e:
+            output += 'Error restarting pulseaudio!<br>'
+            output += '%s <br>' % (e)
+
+        try:
+            cmd = '/etc/init.d/shairport restart'
+            output += subprocess.check_output(cmd, shell=True)
+        except subprocess.CalledProcessError as e:
+            output += 'Error restarting shairport (airplay)!<br>'
+            output += '%s <br>' % (e)
+
+        try: 
+            cmd = '/etc/init.d/bluetooth-agent restart'
+            output += subprocess.check_output(cmd, shell=True)
+        except subprocess.CalledProcessError as e:
+            output += 'Error restarting bluetooth-agent!<br>'
+            output += '%s <br>' % (e)
+        return output
 
     def update_from_form(self, form):
         from app.models import DeploySetting
