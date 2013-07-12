@@ -5,7 +5,7 @@ from app.models import User, ShairportService, AudioService,\
                         WifiService, MisterAudioPlayer
 from app.forms import LoginForm, SignupForm
 from app import application
-
+import sys
 
 controller = Blueprint("default", __name__, url_prefix="")
 
@@ -84,13 +84,20 @@ def reboot():
         try:
             subprocess.call('sudo reboot', shell=True)
         except subprocess.CalledProcessError as e:
+            print "CalledProcessError: %s" % (e)
             flash("CalledProcessError: %s" % (e))
             return redirect(url_for('.reboot'))
         except OSError as e:
+            print "OSError: %s" % (e)
             flash("OSError: %s" % (e))
             return redirect(url_for('.reboot'))
         except ValueError as e:
+            print "ValueError: %s" % (e)
             flash("ValueError: %s" % (e))
+            return redirect(url_for('.reboot'))
+        except:
+            print "Unexpected error:", sys.exc_info()[0]
+            flash("Unexpected error:", sys.exc_info()[0])
             return redirect(url_for('.reboot'))
     return render_template('default/reboot.html', hide_banners=True)
 
