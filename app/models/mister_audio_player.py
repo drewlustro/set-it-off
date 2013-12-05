@@ -22,11 +22,14 @@ class MisterAudioPlayer:
 
     def play(self, song_name, interrupt_playing_song=True):
         song = self.find_song(song_name)
+        print "found song? %r" % (song,)
         if song is not None:
             if interrupt_playing_song:
                 SongPlayJob.kill_current_song()
             util.get_resq().enqueue(SongPlayJob, song)
+            print "queued song, returning"
             return True
+        print "failed. no song."
         return False
 
     def stop(self):
