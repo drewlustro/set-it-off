@@ -37,7 +37,7 @@ class SystemStatusService(Service):
         return True
 
     def software_update(self):
-        cmd = "git --git-dir=/sites/set-it-off/.git --work-tree=/sites/set-it-off/ pull origin release"
+        cmd = "git --git-dir=/sites/setitoff/.git --work-tree=/sites/setitoff/ pull origin release"
         output = subprocess.check_output(cmd, shell=True)
         cmd = "sudo chown -R pi:pi /sites"
         output += subprocess.check_output(cmd, shell=True)

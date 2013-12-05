@@ -74,8 +74,8 @@ class AudioService(Service):
         device = self.get()
         if not device:
             device = 'usbaudio'
-        cmd_alsa_base = 'cp /sites/set-it-off/profiles/alsa/alsa-base.conf.%s /etc/modprobe.d/alsa-base.conf' % device
-        cmd_asound = 'cp /sites/set-it-off/profiles/asound/asound.conf.%s /etc/asound.conf' % device
+        cmd_alsa_base = 'cp /sites/setitoff/profiles/alsa/alsa-base.conf.%s /etc/modprobe.d/alsa-base.conf' % device
+        cmd_asound = 'cp /sites/setitoff/profiles/asound/asound.conf.%s /etc/asound.conf' % device
 
         commands = [cmd_alsa_base, cmd_asound]
         return commands

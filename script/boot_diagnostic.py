@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import sys
-sys.path.append("/sites/set-it-off")
+sys.path.append("/sites/setitoff")
 
 import subprocess
 from app.models import WifiService
@@ -85,7 +85,7 @@ br()
 
 do_software_update = request_value_with_options('Do software update?', ['yes', 'no'])
 if do_software_update == 'yes':
-    cmd = "git --git-dir=/sites/set-it-off/.git --work-tree=/sites/set-it-off/ pull origin release"
+    cmd = "git --git-dir=/sites/setitoff/.git --work-tree=/sites/setitoff/ pull origin release"
     br()
     print "SOFTWARE UPDATE"
     hr()

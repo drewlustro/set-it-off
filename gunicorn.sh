@@ -1,4 +1,4 @@
 #!/bin/bash
-cd /sites/set-it-off
+cd /sites/setitoff
 source /sites/envs/setitoff/bin/activate
 gunicorn production:application -b unix:/tmp/setitoff.sock

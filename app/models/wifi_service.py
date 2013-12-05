@@ -2,7 +2,7 @@ from app.lib import Service
 from app.lib import util
 from path import path
 
-APP_PATH = '/sites/set-it-off'
+APP_PATH = '/sites/setitoff'
 
 class WifiService(Service):
 
