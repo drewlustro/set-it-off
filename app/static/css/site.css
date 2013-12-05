@@ -1,17 +1,22 @@
 body {
     font: 82.5%/1.5em "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #666;
+    color: #bbb;
     margin: 0;
     padding: 0;
     background: #111;
     /* background: #000 url(/static/img/binding_dark.png) repeat top left; */
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+}
+
 /* MAJOR LAYOUT */
 
 header.logo {
-    background: #0b0b0b url(/static/img/mister-audio-icon.png) no-repeat center center;
+    background: #0b0b0b url(/static/img/mister-audio-icon@2x.png) no-repeat center center;
     text-align: center;
+    background-size: 75px 75px;
     height: 100px;
 }
 
@@ -38,12 +43,11 @@ a {
 .pane-title {
     text-align: left;
     padding: 1em 2em;
-    color: #444;
-    background: rgba(255,255,255,.9) url(/static/img/grid_noise.png) repeat top left;
-    font-weight: bold;
+    color: #aaa;
+    background: #333;
+    font-weight: 300;
     text-transform: uppercase;
-    text-shadow: 0 1px 0 #fff;
-    border-bottom: 1px solid #eee;
+    border-bottom: 2px solid #555;
 
 }
 
@@ -160,6 +164,11 @@ form {
 
 /* BOOTSTRAP OVERRIDES */
 
+.progress {
+  background: #000;
+  border: 1px solid #444;
+}
+
 .btn {
     border-radius: 0;
     background-image: none;
@@ -266,8 +275,7 @@ only screen and (                min-resolution: 2dppx) {
     background: #0f0f0f;
     color: #01ce28;
     padding: 12px 20px 14px;
-    border-bottom: 2px solid #000;
-    text-shadow: 0 1px #000;
+    border: 1px solid #444;
 }
 
 /**********************************
