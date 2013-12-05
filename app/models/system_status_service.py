@@ -1,5 +1,6 @@
 from app.lib import Service
 from app.lib import util
+from app import config
 import subprocess
 
 class SystemStatusService(Service):
@@ -37,7 +38,7 @@ class SystemStatusService(Service):
         return True
 
     def software_update(self):
-        cmd = "git --git-dir=/sites/setitoff/.git --work-tree=/sites/setitoff/ pull origin release"
+        cmd = "git --git-dir=/sites/setitoff/.git --work-tree=/sites/setitoff/ pull origin %s" % (config.RELEASE_BRANCH,)
         output = subprocess.check_output(cmd, shell=True)
         cmd = "sudo chown -R pi:pi /sites"
         output += subprocess.check_output(cmd, shell=True)

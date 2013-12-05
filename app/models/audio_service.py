@@ -25,12 +25,12 @@ class AudioService(Service):
             output += 'Error restarting alsa-utils!<br>'
             output += '%s <br>' % (e)
 
-        try:
-            cmd = 'sudo /etc/init.d/pulseaudio restart'
-            output += subprocess.check_output(cmd, shell=True)
-        except subprocess.CalledProcessError as e:
-            output += 'Error restarting pulseaudio!<br>'
-            output += '%s <br>' % (e)
+        # try:
+        #     cmd = 'sudo /etc/init.d/pulseaudio restart'
+        #     output += subprocess.check_output(cmd, shell=True)
+        # except subprocess.CalledProcessError as e:
+        #     output += 'Error restarting pulseaudio!<br>'
+        #     output += '%s <br>' % (e)
 
         try:
             cmd = 'sudo /etc/init.d/shairport restart'
@@ -39,12 +39,12 @@ class AudioService(Service):
             output += 'Error restarting shairport (airplay)!<br>'
             output += '%s <br>' % (e)
 
-        try: 
-            cmd = 'sudo /etc/init.d/bluetooth-agent restart'
-            output += subprocess.check_output(cmd, shell=True)
-        except subprocess.CalledProcessError as e:
-            output += 'Error restarting bluetooth-agent!<br>'
-            output += '%s <br>' % (e)
+        # try: 
+        #     cmd = 'sudo /etc/init.d/bluetooth-agent restart'
+        #     output += subprocess.check_output(cmd, shell=True)
+        # except subprocess.CalledProcessError as e:
+        #     output += 'Error restarting bluetooth-agent!<br>'
+        #     output += '%s <br>' % (e)
         return output
 
     def update_from_form(self, form):
