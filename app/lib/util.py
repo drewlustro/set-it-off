@@ -8,8 +8,8 @@ import re
 import unicodedata
 import random
 import math
-import redis
-import pyres
+#import redis
+#import pyres
 from app import config
 
 def filter_empty(string, default=''):
@@ -51,20 +51,20 @@ def json_dict_from_form(request, name):
         return d
     return dict()
 
-def get_resq():
-    """Returns a ResQ object with the correct redis connection"""
-    return pyres.ResQ(redis.Redis(
-        host=config.REDIS_HOST, port=config.REDIS_PORT, db=config.REDIS_DB))
+# def get_resq():
+#     """Returns a ResQ object with the correct redis connection"""
+#     return pyres.ResQ(redis.Redis(
+#         host=config.REDIS_HOST, port=config.REDIS_PORT, db=config.REDIS_DB))
 
 
-def get_redis():
-    return redis.StrictRedis(
-        host=config.REDIS_HOST, port=config.REDIS_PORT, db=config.REDIS_DB)
+# def get_redis():
+#     return redis.StrictRedis(
+#         host=config.REDIS_HOST, port=config.REDIS_PORT, db=config.REDIS_DB)
 
 
-def get_strict_redis():
-    return redis.StrictRedis(
-        host=config.REDIS_HOST, port=config.REDIS_PORT, db=config.REDIS_DB)
+# def get_strict_redis():
+#     return redis.StrictRedis(
+#         host=config.REDIS_HOST, port=config.REDIS_PORT, db=config.REDIS_DB)
 
 
 # def cache_clear_forced():
