@@ -90,7 +90,7 @@ class SongPlayJob(object):
         print "Running Job for %r" % songpath
         songpath = path(songpath)
         if songpath.ext == '.flac':
-            cmd = 'flac123 "%s"' % songpath
+            cmd = 'flac123 -d alsa "%s"' % songpath
         elif songpath.ext == '.mp3':
             cmd = 'mpg123 "%s"' % songpath
         else:
