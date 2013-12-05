@@ -1,4 +1,6 @@
 import os
+import sys
+sys.path.append(".")
 from app import application
 
 if __name__ == '__main__':

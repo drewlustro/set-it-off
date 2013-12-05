@@ -1,5 +1,7 @@
 from __future__ import with_statement
 from alembic import context
+import sys
+sys.path.append(".")
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
