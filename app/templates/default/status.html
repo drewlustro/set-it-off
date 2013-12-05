@@ -12,33 +12,35 @@
     <br>
     <div class="row">
         <div class="span6">
-            
-            <h4>Hard Drive Space</h4>
-            <div class="progress progress-info">
-                <div class="bar" style="width: {{ system_status_service.hdd_percent_consumed }};"></div>
-            </div>
-            <div class="system-output">
-                Used: {{ (system_status_service.hdd_used / 1024) | format_number("{:,.2f}") }} MB
-                ({{ system_status_service.hdd_percent_consumed }})
-                <br />
-                Free: {{ (system_status_service.hdd_free / 1024) | format_number("{:,.2f}") }} MB
-                <br />
-                Total: {{ (system_status_service.hdd_total / 1024 / 1024) | format_number("{:,.3f}") }} GB
+            <div class="padding-20">
+                <h4>SD Card Space</h4>
+                <div class="progress progress-info">
+                    <div class="bar" style="width: {{ system_status_service.hdd_percent_consumed }};"></div>
+                </div>
+                <div class="system-output">
+                    Used: {{ (system_status_service.hdd_used / 1024) | format_number("{:,.2f}") }} MB
+                    ({{ system_status_service.hdd_percent_consumed }})
+                    <br />
+                    Free: {{ (system_status_service.hdd_free / 1024) | format_number("{:,.2f}") }} MB
+                    <br />
+                    Total: {{ (system_status_service.hdd_total / 1024 / 1024) | format_number("{:,.3f}") }} GB
+                </div>
             </div>
         </div>
         <div class="span6">
-
+            <div class="padding-20">
             <h4>System Memory</h4>
-            <div class="progress progress-warning">
-                <div class="bar" style="width: {{ (system_status_service.mem_used / system_status_service.mem_total * 100) }}%;"></div>
-            </div>
-            <div class="system-output">
-                Used: {{ (system_status_service.mem_used / 1024) | format_number("{:,.3f}") }} MB
-                ({{ (system_status_service.mem_used / system_status_service.mem_total * 100) | format_number("{:,.1f}") }}%)
-                <br />
-                Free: {{ (system_status_service.mem_free / 1024) | format_number("{:,.3f}") }} MB
-                <br />
-                Total: {{ (system_status_service.mem_total / 1024) | format_number("{:,.3f}") }} MB
+                <div class="progress progress-warning">
+                    <div class="bar" style="width: {{ (system_status_service.mem_used / system_status_service.mem_total * 100) }}%;"></div>
+                </div>
+                <div class="system-output">
+                    Used: {{ (system_status_service.mem_used / 1024) | format_number("{:,.3f}") }} MB
+                    ({{ (system_status_service.mem_used / system_status_service.mem_total * 100) | format_number("{:,.1f}") }}%)
+                    <br />
+                    Free: {{ (system_status_service.mem_free / 1024) | format_number("{:,.3f}") }} MB
+                    <br />
+                    Total: {{ (system_status_service.mem_total / 1024) | format_number("{:,.3f}") }} MB
+                </div>
             </div>
         </div>
     </div>
